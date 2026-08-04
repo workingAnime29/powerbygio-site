@@ -263,6 +263,28 @@
       line-height: 1.65;
       margin-top: 10px;
     }
+    .review-images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .review-images img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 6px;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .review-images img:hover { transform: scale(1.02); }
+    @media (max-width: 560px) {
+      .review-images { grid-template-columns: 1fr 1fr; }
+      .review-images img { height: 120px; }
+    }
+
     .review-work-tag {
       display: inline-block;
       background: #1e1e1e;
@@ -398,15 +420,15 @@
   //
   // To display approved reviews here, paste them into the array below:
   const approvedReviews = [
-    // Example — delete this once you have real ones:
-    // {
-    //   name: "Carlos M.",
-    //   location: "Silver Lake, LA",
-    //   work_type: "Panel Upgrade",
-    //   rating: 5,
-    //   review: "Gio did an amazing job on our panel upgrade. Clean work, on time, and fair pricing. Highly recommend!",
-    //   date: "2026-07-01"
-    // }
+    {
+      name: "K. Ibarra",
+      location: "Echo Park, Los Angeles",
+      work_type: "LED Lighting & Outlets & Wiring",
+      rating: 5,
+      review: "PowerByGio did an incredible job at my home in Echo Park. Gio installed beautiful LED strip lights throughout the living room that completely transformed the space, upgraded all the switches in the living room, and installed a stunning new chandelier above the dining room. What I really appreciated was that Gio gave me the option to find the chandelier of my own choice — he let me pick exactly what I wanted! He covered all the furniture before starting work, and when he was done he cleaned up everything like he was never there. He also worked around my schedule which made the whole process stress free. The attention to detail was impressive — you can tell he takes real pride in his work. Highly recommend PowerByGio to anyone in the LA area!",
+      date: "2026-08-04",
+      images: ["web_LED.jpg", "web_Outlet.jpg", "web_Chandelier.jpg"]
+    }
   ];
 
   function getInitials(name) {
@@ -441,6 +463,10 @@
           <div class="review-stars">${renderStars(parseInt(r.rating))}</div>
         </div>
         <div class="review-text">"${r.review}"</div>
+        ${r.images && r.images.length ? `
+          <div class="review-images">
+            ${r.images.map(img => `<img src="${img}" alt="Work by PowerByGio" loading="lazy" />`).join('')}
+          </div>` : ''}
         ${r.work_type ? `<span class="review-work-tag">⚡ ${r.work_type}</span>` : ''}
       </div>
     `).join('');
